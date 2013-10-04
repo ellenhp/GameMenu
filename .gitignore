@@ -1,0 +1,14 @@
+.dll
+*.lib
+*.obj
+*.dll
+*.pdb
+*.ilk
+*.exe
+*.tlog
+*.log
+*.suo
+*.sdf
+*.ipch
+*.user
+*.opensdf

@@ -14,24 +14,24 @@ extern "C"
 } font_metrics_t;
 */
 
-void TRGui_motion_func( int x, int y );
-void TRGui_mouse_func( int button, int state, int x, int y );
+void GameMenu_motion_func( int x, int y );
+void GameMenu_mouse_func( int button, int state, int x, int y );
 
-void TRGui_simulate_click(widget_t* widget);
+void GameMenu_simulate_click(widget_t* widget);
 
-void TRGui_init();
+void GameMenu_init();
 
-widget_bounding_box_t TRGui_get_bb(widget_t* widget);
-void TRGui_draw_text(char* text, int active, coord_t coord);
+widget_bounding_box_t GameMenu_get_bb(widget_t* widget);
+void GameMenu_draw_text(char* text, int active, coord_t coord);
 coord_t get_absolute(coord_t coord, int asc, int desc);
 
-int TRGui_get_window_height();
-int TRGui_get_window_width();
+int GameMenu_get_window_height();
+int GameMenu_get_window_width();
 
-int TRGui_joystick_enabled();
-double TRGui_get_joystick_x();
-double TRGui_get_joystick_y();
-int TRGui_joystick_button_down(int button);
+int GameMenu_joystick_enabled();
+double GameMenu_get_joystick_x();
+double GameMenu_get_joystick_y();
+int GameMenu_joystick_button_down(int button);
 
 #ifdef __cplusplus
 }

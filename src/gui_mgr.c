@@ -26,7 +26,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 		widget_list_item_t* current=top;
 		while (current)
 		{
-			widget_bounding_box_t bb=TRGui_get_bb(current->widget);
+			widget_bounding_box_t bb=GameMenu_get_bb(current->widget);
 			if (x>bb.x && x<bb.x+bb.width &&
 				y>bb.y && y<bb.y+bb.height)
 			{
@@ -43,7 +43,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 	}
 	else if (active_item)
 	{
-		widget_bounding_box_t bb=TRGui_get_bb(active_item->widget);
+		widget_bounding_box_t bb=GameMenu_get_bb(active_item->widget);
 		if (x>bb.x && x<bb.x+bb.width &&
 			y>bb.y && y<bb.y+bb.height)
 		{
@@ -80,7 +80,7 @@ void gui_draw()
 	widget_list_item_t* current=top;
 	while (current)
 	{
-		TRGui_draw_text(current->widget->text, active_item==current, current->widget->layout_info);
+		GameMenu_draw_text(current->widget->text, active_item==current, current->widget->layout_info);
 		
 		current=current->next;
 	}

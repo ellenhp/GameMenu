@@ -156,6 +156,10 @@ void widget_set_text(widget_t* widget, char* text)
 
 void destroy_widget(widget_t* widget)
 {
+	if (widget==0)
+	{
+		return;
+	}
 	free(widget->text);
 	free(widget);
 }
@@ -163,11 +167,14 @@ void destroy_widget(widget_t* widget)
 void reset_gui()
 {
 	widget_list_item_t* current=top;
-	while (current && current->widget)
+	widget_list_item_t* tmp;
+	while (current)
 	{
 		destroy_widget(current->widget);
+		current->widget=0;
+		tmp=current;
 		current=current->next;
-		free(current);
+		free(tmp);
 	}
 	top=0;
 }

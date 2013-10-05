@@ -28,6 +28,11 @@ coord_t get_absolute(coord_t coord, int asc, int desc);
 int TRGui_get_window_height();
 int TRGui_get_window_width();
 
+int TRGui_joystick_enabled();
+double TRGui_get_joystick_x();
+double TRGui_get_joystick_y();
+int TRGui_joystick_button_down(int button);
+
 #ifdef __cplusplus
 }
 #endif

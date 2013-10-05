@@ -1,4 +1,4 @@
-TRGui
+GameMenu
 =====
 
-TRGui is a GUI system created for use with tux racer, but generalized enough to use with other projects.
+GameMenu is a generic menu system with a generic name. Created for use with Tux Racer, but should be appropriate for other projects.

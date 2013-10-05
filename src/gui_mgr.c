@@ -3,6 +3,8 @@
 #include "gui_abstraction.h"
 #include <limits.h>
 #include <math.h>
+#include <stdlib.h>
+#include <string.h>
 
 widget_list_item_t* top;
 
@@ -138,6 +140,18 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 		widget->layout_info.y_coord_type=LINE_COORD;
 		widget->layout_info.y_just=CENTER_JUST;
 	}
+}
+
+void widget_set_text(widget_t* widget, char* text)
+{
+	char* text_cpy=(char*)malloc(strlen(text)+1);
+	if (widget->text)
+	{
+		free(widget->text);
+		widget->text=0;
+	}
+	strcpy(text_cpy, text);
+	widget->text=text_cpy;
 }
 
 void destroy_widget(widget_t* widget)

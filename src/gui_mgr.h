@@ -76,6 +76,7 @@ void gui_draw();
 
 void gui_add_widget(widget_t* widget, coord_t* coord);
 
+void widget_set_text(widget_t* widget, char* text);
 void destroy_widget(widget_t* widget);
 
 void setup_gui();

@@ -76,15 +76,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\gui_button.c" />
-    <ClCompile Include="..\..\src\gui_mgr.c" />
-    <ClCompile Include="..\..\src\gui_slider.c" />
+    <ClInclude Include="..\src\gui_abstraction.h" />
+    <ClInclude Include="..\src\gui_button.h" />
+    <ClInclude Include="..\src\gui_mgr.h" />
+    <ClInclude Include="..\src\gui_slider.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\gui_abstraction.h" />
-    <ClInclude Include="..\..\src\gui_button.h" />
-    <ClInclude Include="..\..\src\gui_mgr.h" />
-    <ClInclude Include="..\..\src\gui_slider.h" />
+    <ClCompile Include="..\src\gui_button.c" />
+    <ClCompile Include="..\src\gui_mgr.c" />
+    <ClCompile Include="..\src\gui_slider.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

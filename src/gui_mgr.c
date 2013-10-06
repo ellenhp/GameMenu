@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <SDL.h>
 
 widget_list_item_t* top;
 
@@ -56,11 +57,11 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 				}
 				break;
 			case SLIDER:
-				if (button==1) //left mouse button
+				if (button==SDL_BUTTON_LEFT) //left mouse button
 				{
 					cb=active_item->widget->callback1; //up callback
 				}
-				else if (button==3) //right mouse button
+				else if (button==SDL_BUTTON_RIGHT) //right mouse button
 				{
 					cb=active_item->widget->callback2; //down callback
 				}
@@ -84,6 +85,8 @@ void gui_draw()
 		
 		current=current->next;
 	}
+
+
 }
 
 void gui_add_widget(widget_t* widget, coord_t* coord)
@@ -139,6 +142,49 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 		widget->layout_info.y=next_line;
 		widget->layout_info.y_coord_type=LINE_COORD;
 		widget->layout_info.y_just=CENTER_JUST;
+	}
+}
+
+void gui_process_input(input_t input)
+{
+	widget_bounding_box_t bb={0, 0, 0, 0};
+	switch (input)
+	{
+	case NONE_INPUT:
+		return;
+	case SELECT_INPUT:
+		if (active_item!=NULL)
+		{
+			active_item->widget->callback1(1, 0, 0, bb);
+		}
+		break;
+	default:
+		//directional input
+		if (active_item==NULL)
+		{
+			active_item=top;
+			return;
+		}
+		//another switch. I don't think it's possible to combine them without duplicating the active_item==NULL check
+		switch (input)
+		{
+		case UP_INPUT:
+			if (active_item->prev)
+				active_item=active_item->prev;
+			break;
+		case DOWN_INPUT:
+			if (active_item->next)
+				active_item=active_item->next;
+			break;
+		case RIGHT_INPUT:
+			if (active_item->widget->callback1)
+				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb);
+			break;
+		case LEFT_INPUT:
+			if (active_item->widget->callback2)
+				active_item->widget->callback2(SDL_BUTTON_RIGHT, 0, 0, bb);
+			break;
+		}
 	}
 }
 

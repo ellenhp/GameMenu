@@ -17,6 +17,8 @@ extern "C"
 void GameMenu_motion_func( int x, int y );
 void GameMenu_mouse_func( int button, int state, int x, int y );
 
+void GameMenu_keypress( int key );
+
 void GameMenu_simulate_click(widget_t* widget);
 
 void GameMenu_init();
@@ -27,11 +29,6 @@ coord_t get_absolute(coord_t coord, int asc, int desc);
 
 int GameMenu_get_window_height();
 int GameMenu_get_window_width();
-
-int GameMenu_joystick_enabled();
-double GameMenu_get_joystick_x();
-double GameMenu_get_joystick_y();
-int GameMenu_joystick_button_down(int button);
 
 #ifdef __cplusplus
 }

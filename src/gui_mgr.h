@@ -6,6 +6,8 @@ extern "C"
 {
 #endif
 
+#include "gui_input.h"
+
 typedef struct widget_bounding_box_t
 {
 	int x, y, width, height;
@@ -73,6 +75,8 @@ void gui_mouse_button_event(int button, int state, int x, int y);
 void gui_keyboard_event(int key, int down);
 
 void gui_draw();
+
+void gui_process_input(input_t input);
 
 void gui_add_widget(widget_t* widget, coord_t* coord);
 

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="TRGui"
+	Name="GameMenu"
 	ProjectGUID="{33753EBF-4E82-4C43-8B4E-BEBAEF7B44AD}"
-	RootNamespace="TRGui"
+	RootNamespace="GameMenu"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>

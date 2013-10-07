@@ -16,6 +16,8 @@ extern "C"
 
 void GameMenu_motion_func( int x, int y );
 void GameMenu_mouse_func( int button, int state, int x, int y );
+void GameMenu_joystick_func( double x, double y );
+void GameMenu_joystick_button_func( int button );
 
 void GameMenu_keypress( int key );
 

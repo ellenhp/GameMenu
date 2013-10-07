@@ -17,6 +17,8 @@ typedef enum input_t
 } input_t;
 
 void gui_process_keypress(int key);
+void gui_process_button_press(int button);
+void gui_process_axis(double x, double y);
 
 #ifdef __cplusplus
 }

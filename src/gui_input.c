@@ -5,6 +5,11 @@
 
 #include "SDL.h"
 
+#define JOYSTICK_TRIGGER 0.7
+#define JOYSTICK_RELAX 0.5
+
+int joystick_x_status=0, joystick_y_status=0;
+
 void gui_process_keypress(int key)
 {
 	input_t input=NONE_INPUT;
@@ -28,4 +33,57 @@ void gui_process_keypress(int key)
 		break;
 	}
 	gui_process_input(input);
+}
+
+void gui_process_button_press(int button)
+{
+	if (button==0)
+	{
+		gui_process_input(SELECT_INPUT);
+	}
+}
+
+void gui_process_axis(double x, double y)
+{
+	if (joystick_x_status!=0)
+	{
+		if (fabs(x)<JOYSTICK_RELAX)
+		{
+			joystick_x_status=0;
+		}
+	}
+	else
+	{
+		if (x<-JOYSTICK_TRIGGER)
+		{
+			joystick_x_status=-1;
+			gui_process_input(LEFT_INPUT);
+		}
+		if (x>JOYSTICK_TRIGGER)
+		{
+			joystick_x_status=1;
+			gui_process_input(RIGHT_INPUT);
+		}
+	}
+
+	if (joystick_y_status!=0)
+	{
+		if (fabs(y)<JOYSTICK_RELAX)
+		{
+			joystick_y_status=0;
+		}
+	}
+	else
+	{
+		if (y<-JOYSTICK_TRIGGER)
+		{
+			joystick_y_status=-1;
+			gui_process_input(UP_INPUT);
+		}
+		if (y>JOYSTICK_TRIGGER)
+		{
+			joystick_y_status=1;
+			gui_process_input(DOWN_INPUT);
+		}
+	}
 }

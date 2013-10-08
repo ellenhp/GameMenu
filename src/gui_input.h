@@ -22,6 +22,8 @@ void gui_process_axis(double x, double y);
 
 void gui_input_update();
 
+void gui_set_select_button(int button);
+
 #ifdef __cplusplus
 }
 #endif

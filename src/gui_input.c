@@ -17,6 +17,8 @@ int joystick_x_repeating=0, joystick_y_repeating=0;
 
 double joystick_x=0, joystick_y=0;
 
+int select_button=-1; //if uninitialized, this won't ever match a real button
+
 void gui_process_keypress(int key)
 {
 	input_t input=NONE_INPUT;
@@ -48,6 +50,11 @@ void gui_process_button_press(int button)
 	{
 		gui_process_input(SELECT_INPUT);
 	}
+}
+
+void gui_set_select_button(int button)
+{
+	
 }
 
 void gui_process_axis(double x, double y)

@@ -5,8 +5,8 @@
 
 #include "SDL.h"
 
-#define JOYSTICK_TRIGGER 0.7
-#define JOYSTICK_RELAX 0.5
+#define JOYSTICK_TRIGGER 0.5
+#define JOYSTICK_RELAX 0.35
 
 int joystick_x_status=0, joystick_y_status=0;
 

@@ -143,6 +143,11 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 		widget->layout_info.y_coord_type=LINE_COORD;
 		widget->layout_info.y_just=CENTER_JUST;
 	}
+
+	if (!active_item && SDL_NumJoysticks()>0)
+	{
+		active_item=top;
+	}
 }
 
 void gui_process_input(input_t input)

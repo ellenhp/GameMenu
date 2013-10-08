@@ -222,6 +222,7 @@ void reset_gui()
 		current=current->next;
 		free(tmp);
 	}
+	active_item=NULL;
 	top=0;
 }
 

@@ -32,6 +32,8 @@ coord_t get_absolute(coord_t coord, int asc, int desc);
 int GameMenu_get_window_height();
 int GameMenu_get_window_width();
 
+int GameMenu_resolve_bounds(int val, int min, int max, input_type_t input_type);
+
 #ifdef __cplusplus
 }
 #endif

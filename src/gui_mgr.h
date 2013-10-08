@@ -13,7 +13,13 @@ typedef struct widget_bounding_box_t
 	int x, y, width, height;
 } widget_bounding_box_t;
 
-typedef void (*widget_click_callback_t)(int button, int mouse_x, int mouse_y, widget_bounding_box_t bb); 
+typedef enum input_type_t
+{
+	CLICK_INPUT,
+	JOY_KB_INPUT
+} input_type_t;
+
+typedef void (*widget_click_callback_t)(int button, int mouse_x, int mouse_y, widget_bounding_box_t bb, input_type_t input_type); 
 
 /* Enumerates allowed widget types
  */

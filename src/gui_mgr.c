@@ -53,7 +53,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 			case BUTTON:
 				if (active_item->widget->callback1)
 				{
-					active_item->widget->callback1(button, x, y, bb);
+					active_item->widget->callback1(button, x, y, bb, CLICK_INPUT);
 				}
 				break;
 			case SLIDER:
@@ -67,7 +67,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 				}
 				if (cb)
 				{
-					cb(button, x, y, bb);
+					cb(button, x, y, bb, CLICK_INPUT);
 				}
 				break;
 			}
@@ -160,7 +160,7 @@ void gui_process_input(input_t input)
 	case SELECT_INPUT:
 		if (active_item!=NULL)
 		{
-			active_item->widget->callback1(1, 0, 0, bb);
+			active_item->widget->callback1(1, 0, 0, bb, CLICK_INPUT);
 		}
 		break;
 	default:
@@ -183,11 +183,11 @@ void gui_process_input(input_t input)
 			break;
 		case RIGHT_INPUT:
 			if (active_item->widget->type==SLIDER && active_item->widget->callback1)
-				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb);
+				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb, JOY_KB_INPUT);
 			break;
 		case LEFT_INPUT:
 			if (active_item->widget->type==SLIDER && active_item->widget->callback2)
-				active_item->widget->callback2(SDL_BUTTON_RIGHT, 0, 0, bb);
+				active_item->widget->callback2(SDL_BUTTON_RIGHT, 0, 0, bb, JOY_KB_INPUT);
 			break;
 		}
 	}

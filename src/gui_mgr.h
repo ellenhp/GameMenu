@@ -82,6 +82,8 @@ void gui_keyboard_event(int key, int down);
 
 void gui_draw();
 
+void gui_update();
+
 void gui_process_input(input_t input);
 
 void gui_add_widget(widget_t* widget, coord_t* coord);

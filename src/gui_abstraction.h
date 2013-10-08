@@ -24,6 +24,7 @@ void GameMenu_keypress( int key );
 void GameMenu_simulate_click(widget_t* widget);
 
 void GameMenu_init();
+void GameMenu_draw();
 
 widget_bounding_box_t GameMenu_get_bb(widget_t* widget);
 void GameMenu_draw_text(char* text, int active, coord_t coord);

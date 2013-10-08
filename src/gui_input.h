@@ -20,6 +20,8 @@ void gui_process_keypress(int key);
 void gui_process_button_press(int button);
 void gui_process_axis(double x, double y);
 
+void gui_input_update();
+
 #ifdef __cplusplus
 }
 #endif

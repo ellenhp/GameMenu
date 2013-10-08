@@ -8,12 +8,14 @@
 #define JOYSTICK_TRIGGER 0.5
 #define JOYSTICK_RELAX 0.35
 
-#define JOYSTICK_REPEAT_DELAY 200
-#define JOYSTICK_REPEAT_RATE_INVERSE 100
+#define JOYSTICK_REPEAT_DELAY 300
+#define JOYSTICK_REPEAT_RATE_INVERSE 150
 
 int joystick_x_status=0, joystick_y_status=0;
 int joystick_x_trigger_time=INT_MAX, joystick_y_trigger_time=INT_MAX;
 int joystick_x_repeating=0, joystick_y_repeating=0;
+
+double joystick_x=0, joystick_y=0;
 
 void gui_process_keypress(int key)
 {
@@ -50,9 +52,15 @@ void gui_process_button_press(int button)
 
 void gui_process_axis(double x, double y)
 {
+	joystick_x=x;
+	joystick_y=y;
+}
+
+void gui_input_update()
+{
 	if (joystick_x_status!=0)
 	{
-		if (fabs(x)<JOYSTICK_RELAX)
+		if (fabs(joystick_x)<JOYSTICK_RELAX)
 		{
 			joystick_x_status=0;
 			joystick_x_repeating=0;
@@ -86,13 +94,13 @@ void gui_process_axis(double x, double y)
 	}
 	else
 	{
-		if (x<-JOYSTICK_TRIGGER)
+		if (joystick_x<-JOYSTICK_TRIGGER)
 		{
 			joystick_x_status=-1;
 			joystick_x_trigger_time=SDL_GetTicks();
 			gui_process_input(LEFT_INPUT);
 		}
-		if (x>JOYSTICK_TRIGGER)
+		if (joystick_x>JOYSTICK_TRIGGER)
 		{
 			joystick_x_status=1;
 			joystick_x_trigger_time=SDL_GetTicks();
@@ -102,7 +110,7 @@ void gui_process_axis(double x, double y)
 
 	if (joystick_y_status!=0)
 	{
-		if (fabs(y)<JOYSTICK_RELAX)
+		if (fabs(joystick_y)<JOYSTICK_RELAX)
 		{
 			joystick_y_status=0;
 			joystick_y_repeating=0;
@@ -136,13 +144,13 @@ void gui_process_axis(double x, double y)
 	}
 	else
 	{
-		if (y<-JOYSTICK_TRIGGER)
+		if (joystick_y<-JOYSTICK_TRIGGER)
 		{
 			joystick_y_status=-1;
 			joystick_y_trigger_time=SDL_GetTicks();
 			gui_process_input(UP_INPUT);
 		}
-		if (y>JOYSTICK_TRIGGER)
+		if (joystick_y>JOYSTICK_TRIGGER)
 		{
 			joystick_y_status=1;
 			joystick_y_trigger_time=SDL_GetTicks();
@@ -150,3 +158,4 @@ void gui_process_axis(double x, double y)
 		}
 	}
 }
+

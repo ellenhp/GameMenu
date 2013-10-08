@@ -89,6 +89,11 @@ void gui_draw()
 
 }
 
+void gui_update()
+{
+	gui_input_update();
+}
+
 void gui_add_widget(widget_t* widget, coord_t* coord)
 {
 	//current functionality appends item to the end of the linked list

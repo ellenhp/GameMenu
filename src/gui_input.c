@@ -2,6 +2,7 @@
 #include "gui_mgr.h"
 #include "gui_abstraction.h"
 #include <math.h>
+#include <limits.h>
 
 #include "SDL.h"
 

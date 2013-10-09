@@ -21,7 +21,7 @@ void gui_mouse_motion_event(int x, int y)
 
 void gui_mouse_button_event(int button, int down, int x, int y)
 {
-	widget_click_callback_t cb;
+	widget_click_callback_t cb=0;
 	if (down)
 	{
 		widget_list_item_t* current=top;

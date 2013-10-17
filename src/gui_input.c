@@ -5,6 +5,7 @@
 #include <limits.h>
 
 #include "SDL.h"
+#include "SDL_gamecontroller.h"
 
 #define JOYSTICK_TRIGGER 0.5
 #define JOYSTICK_RELAX 0.35
@@ -47,7 +48,7 @@ void gui_process_keypress(int key)
 
 void gui_process_button_press(int button)
 {
-	if (button==0)
+	if (button==SDL_CONTROLLER_BUTTON_A)
 	{
 		gui_process_input(SELECT_INPUT);
 	}

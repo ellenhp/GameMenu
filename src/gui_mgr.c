@@ -141,7 +141,7 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 	
 	if (!coord)
 	{
-		widget->layout_info.x=0;
+		widget->layout_info.x=0.5;
 		widget->layout_info.x_coord_type=NORMALIZED_COORD;
 		widget->layout_info.x_just=CENTER_JUST;
 		widget->layout_info.y=next_line;
@@ -196,6 +196,31 @@ void gui_process_input(input_t input)
 			break;
 		}
 	}
+}
+
+void gui_balance_lines(int manual_offset)
+{
+	widget_list_item_t* current=top;
+	int min_line=INT_MAX, max_line=INT_MIN;
+	int offset;
+	while (current)
+	{
+		if (current->widget->layout_info.y_coord_type==LINE_COORD)
+		{
+			min_line=min((int)current->widget->layout_info.y, min_line);
+			max_line=max((int)current->widget->layout_info.y, max_line);
+		}
+		current=current->next;
+	}
+	offset=min_line-(max_line-min_line)/2 + manual_offset;
+
+	current=top;
+	while (current)
+	{
+		current->widget->layout_info.y+=offset;
+		current=current->next;
+	}
+
 }
 
 void widget_set_text(widget_t* widget, char* text)

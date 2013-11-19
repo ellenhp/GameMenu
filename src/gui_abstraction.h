@@ -6,13 +6,12 @@ extern "C"
 {
 #endif
 
+#ifdef WIN32
+#include "windows.h"
+#endif
+#include "GL/GL.h"
 #include "gui_mgr.h"
 
-/*typedef struct font_metrics_t
-{
-	int asc, desc, width;
-} font_metrics_t;
-*/
 
 void GameMenu_motion_func( int x, int y );
 void GameMenu_mouse_func( int button, int state, int finger_index, int x, int y );
@@ -28,6 +27,7 @@ void GameMenu_draw();
 
 widget_bounding_box_t GameMenu_get_bb(widget_t* widget);
 void GameMenu_draw_text(char* text, int active, coord_t coord);
+void GameMenu_draw_image(GLuint binding, rect_t image_rect, rect_t screen_rect);
 coord_t get_absolute(coord_t coord, int asc, int desc);
 
 int GameMenu_get_window_height();

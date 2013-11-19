@@ -53,10 +53,17 @@ typedef enum justification_t
  */
 typedef struct coord_t
 {
-	int x, y;
+	double x, y;
 	coord_type_t x_coord_type, y_coord_type;
 	justification_t x_just, y_just;
 } coord_t;
+
+/*
+ */
+typedef struct rect_t
+{
+	coord_t upper_right, lower_left;
+} rect_t;
 
 /*
  */
@@ -76,9 +83,13 @@ typedef struct widget_list_item_t
 	struct widget_t* widget;
 } widget_list_item_t;
 
+#define FULL_RECT {{0, 0, NORMALIZED_COORD, NORMALIZED_COORD, LEFT_JUST, LEFT_JUST}, {1, 1, NORMALIZED_COORD, NORMALIZED_COORD, LEFT_JUST, LEFT_JUST}}
+
 void gui_mouse_motion_event(int x, int y);
 void gui_mouse_button_event(int button, int state, int x, int y);
 void gui_keyboard_event(int key, int down);
+
+void gui_balance_lines(int manual_offset);
 
 void gui_draw();
 

@@ -1,22 +1,37 @@
+#include "gui_slider.h"
 #include <stdlib.h>
 #include <string.h>
+#include "SDL.h"
 #include "gui_button.h"
-#include "gui_slider.h"
 
 void slider_value_changed(int button, int mouse_x, int mouse_y, widget_bounding_box_t bb, input_type_t input_type, widget_t* widget)
 {
-	/*if (mouse_x<bb.x+bb.width/3)
+	if (input_type==CLICK_INPUT)
 	{
-		widget->option--;
-		widget->option=(widget->option+widget->total_options) % widget->total_options;
+		if (mouse_x<bb.x+bb.width/2)
+		{
+			widget->option--;
+			widget->option=(widget->option+widget->total_options) % widget->total_options;
+		}
+		else
+		{
+			widget->option++;
+			widget->option %= widget->total_options;
+		}
 	}
-	else if (mouse_y>bb.x+2*bb.width/3)
+	else // JOY_KB_INPUT
 	{
-		widget->option++;
-		widget->option %= widget->total_options;
-	}*/
-	widget->option++;
-	widget->option %= widget->total_options;
+		if (button==SDL_BUTTON_RIGHT)
+		{
+			widget->option++;
+			widget->option %= widget->total_options;
+		}
+		else if (button==SDL_BUTTON_LEFT)
+		{
+			widget->option--;
+			widget->option=(widget->option+widget->total_options) % widget->total_options;
+		}
+	}
 
 	slider_set_value(widget, widget->option);
 	if (widget->callback2)
@@ -30,8 +45,8 @@ widget_t* create_slider(char* text, int num_options, char* options, widget_click
 	widget_t* slider=(widget_t*)malloc(sizeof(widget_t));
 
 	slider->text=0;
-	slider->callback2=changed;
 	slider->callback1=slider_value_changed;
+	slider->callback2=changed;
 	slider->option=0;
 	slider->total_options=num_options;
 	slider->type=SLIDER;

@@ -198,12 +198,12 @@ void gui_process_input(input_t input)
 				active_item=active_item->next;
 			break;
 		case RIGHT_INPUT:
-			if (active_item->widget->type==SLIDER && active_item->widget->callback1)
-				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
+			if (active_item->widget->callback1)
+				active_item->widget->callback1(SDL_BUTTON_RIGHT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
 			break;
 		case LEFT_INPUT:
-			if (active_item->widget->type==SLIDER && active_item->widget->callback2)
-				active_item->widget->callback2(SDL_BUTTON_RIGHT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
+			if (active_item->widget->callback1)
+				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
 			break;
 		}
 	}
@@ -288,18 +288,18 @@ void slider_set_value(widget_t* slider, int value)
 			substring_length=strlen(next_delimiter);
 		}
 
-		slider->text=(char*)malloc(strlen(slider->data1) + substring_length + 1);
+		slider->text=(char*)malloc(strlen(slider->data1) + substring_length + 1+4);
 
 		memcpy(tmp, next_delimiter, substring_length);
 		tmp[substring_length]=0; //null terminate the string
 
-		sprintf(slider->text, "%s%s", slider->data1, tmp);
+		sprintf(slider->text, "< %s%s >", slider->data1, tmp);
 	}
 	else
 	{
 		slider->text=(char*)malloc(strlen(slider->data1)+10);
 
-		sprintf(slider->text, "%s%d", slider->data1, slider->option);
+		sprintf(slider->text, "< %s%d >", slider->data1, slider->option);
 	}
 }
 
@@ -309,7 +309,18 @@ void destroy_widget(widget_t* widget)
 	{
 		return;
 	}
-	free(widget->text);
+	if (widget->data1)
+	{
+		free(widget->data1);
+	}
+	if (widget->data2)
+	{
+		free(widget->data2);
+	}
+	if (widget->data2)
+	{
+		free(widget->text);
+	}
 	free(widget);
 }
 

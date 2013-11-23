@@ -48,10 +48,26 @@ void gui_process_keypress(int key)
 
 void gui_process_button_press(int button)
 {
-	if (button==SDL_CONTROLLER_BUTTON_A)
+	input_t input=NONE_INPUT;
+	switch (button)
 	{
-		gui_process_input(SELECT_INPUT);
+	case SDL_CONTROLLER_BUTTON_A:
+		input=SELECT_INPUT;
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_UP:
+		input=UP_INPUT;
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+		input=DOWN_INPUT;
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+		input=LEFT_INPUT;
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+		input=RIGHT_INPUT;
+		break;
 	}
+	gui_process_input(input);
 }
 
 void gui_set_select_button(int button)

@@ -198,11 +198,11 @@ void gui_process_input(input_t input)
 				active_item=active_item->next;
 			break;
 		case RIGHT_INPUT:
-			if (active_item->widget->callback1)
+			if (active_item->widget->type==SLIDER && active_item->widget->callback1)
 				active_item->widget->callback1(SDL_BUTTON_RIGHT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
 			break;
 		case LEFT_INPUT:
-			if (active_item->widget->callback1)
+			if (active_item->widget->type==SLIDER && active_item->widget->callback1)
 				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
 			break;
 		}

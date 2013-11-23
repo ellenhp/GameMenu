@@ -8,6 +8,10 @@ extern "C"
 
 #include "gui_input.h"
 
+#define SLIDER_DELIMITER '|'
+
+struct widget_t;
+
 typedef struct widget_bounding_box_t
 {
 	int x, y, width, height;
@@ -19,7 +23,7 @@ typedef enum input_type_t
 	JOY_KB_INPUT
 } input_type_t;
 
-typedef void (*widget_click_callback_t)(int button, int mouse_x, int mouse_y, widget_bounding_box_t bb, input_type_t input_type); 
+typedef void (*widget_click_callback_t)(int button, int mouse_x, int mouse_y, widget_bounding_box_t bb, input_type_t input_type, struct widget_t* widget); 
 
 /* Enumerates allowed widget types
  */
@@ -71,6 +75,10 @@ typedef struct widget_t
 {
 	widget_type_t type;
 	char* text;
+	char* data1;
+	char* data2;
+	int option;
+	int total_options;
 	int shortcut_key;
 	widget_click_callback_t callback1, callback2;
 	coord_t layout_info;
@@ -99,8 +107,10 @@ void gui_process_input(input_t input);
 
 void gui_add_widget(widget_t* widget, coord_t* coord);
 
-void widget_set_text(widget_t* widget, char* text);
+void button_set_text(widget_t* widget, char* text);
 void destroy_widget(widget_t* widget);
+
+void slider_set_value(widget_t* slider, int value);
 
 void setup_gui();
 void reset_gui();

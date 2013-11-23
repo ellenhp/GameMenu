@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <SDL.h>
 
 widget_list_item_t* top;
@@ -53,7 +54,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 			case BUTTON:
 				if (active_item->widget->callback1)
 				{
-					active_item->widget->callback1(button, x, y, bb, CLICK_INPUT);
+					active_item->widget->callback1(button, x, y, bb, CLICK_INPUT, active_item->widget);
 				}
 				break;
 			case SLIDER:
@@ -67,7 +68,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 				}
 				if (cb)
 				{
-					cb(button, x, y, bb, CLICK_INPUT);
+					cb(button, x, y, bb, CLICK_INPUT, active_item->widget);
 				}
 				break;
 			}
@@ -79,8 +80,18 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 void gui_draw()
 {
 	widget_list_item_t* current=top;
+	char text[100];
 	while (current)
 	{
+		switch (current->widget->type)
+		{
+		case BUTTON:
+			sprintf(text, "%s", current->widget->text);
+			break;
+		case SLIDER:
+			sprintf(text, "%s", current->widget->text);
+			break;
+		}
 		GameMenu_draw_text(current->widget->text, active_item==current, current->widget->layout_info);
 		
 		current=current->next;
@@ -165,7 +176,7 @@ void gui_process_input(input_t input)
 	case SELECT_INPUT:
 		if (active_item!=NULL)
 		{
-			active_item->widget->callback1(1, 0, 0, bb, CLICK_INPUT);
+			active_item->widget->callback1(1, 0, 0, bb, CLICK_INPUT, active_item->widget);
 		}
 		break;
 	default:
@@ -188,11 +199,11 @@ void gui_process_input(input_t input)
 			break;
 		case RIGHT_INPUT:
 			if (active_item->widget->type==SLIDER && active_item->widget->callback1)
-				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb, JOY_KB_INPUT);
+				active_item->widget->callback1(SDL_BUTTON_LEFT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
 			break;
 		case LEFT_INPUT:
 			if (active_item->widget->type==SLIDER && active_item->widget->callback2)
-				active_item->widget->callback2(SDL_BUTTON_RIGHT, 0, 0, bb, JOY_KB_INPUT);
+				active_item->widget->callback2(SDL_BUTTON_RIGHT, 0, 0, bb, JOY_KB_INPUT, active_item->widget);
 			break;
 		}
 	}
@@ -223,7 +234,7 @@ void gui_balance_lines(int manual_offset)
 
 }
 
-void widget_set_text(widget_t* widget, char* text)
+void button_set_text(widget_t* widget, char* text)
 {
 	char* text_cpy=(char*)malloc(strlen(text)+1);
 	if (widget->text)
@@ -233,6 +244,63 @@ void widget_set_text(widget_t* widget, char* text)
 	}
 	strcpy(text_cpy, text);
 	widget->text=text_cpy;
+}
+
+void slider_set_value(widget_t* slider, int value)
+{
+	char* label=0;
+	int i=0;
+	char* next_delimiter=slider->data2;
+	char* substring_end=0;
+	int substring_length=0;
+
+	char tmp[100];
+
+	slider->option=value;
+	
+	if (slider->text)
+	{
+		free(slider->text);
+		slider->text=0;
+	}
+
+	if (slider->data2)
+	{
+		for (i=0; i<value; i++)
+		{
+			next_delimiter=strchr(next_delimiter, SLIDER_DELIMITER);
+			next_delimiter++; //move to the next character after the delimiter
+			if (next_delimiter==0)
+			{
+				button_set_text(slider, "ERROR");
+				return;
+			}
+		}
+
+		substring_end=strchr(next_delimiter, SLIDER_DELIMITER);
+
+		if (substring_end)
+		{
+			substring_length=substring_end-next_delimiter;
+		}
+		else
+		{
+			substring_length=strlen(next_delimiter);
+		}
+
+		slider->text=(char*)malloc(strlen(slider->data1) + substring_length + 1);
+
+		memcpy(tmp, next_delimiter, substring_length);
+		tmp[substring_length]=0; //null terminate the string
+
+		sprintf(slider->text, "%s%s", slider->data1, tmp);
+	}
+	else
+	{
+		slider->text=(char*)malloc(strlen(slider->data1)+10);
+
+		sprintf(slider->text, "%s%d", slider->data1, slider->option);
+	}
 }
 
 void destroy_widget(widget_t* widget)

@@ -218,8 +218,15 @@ void gui_balance_lines(int manual_offset)
 	{
 		if (current->widget->layout_info.y_coord_type==LINE_COORD)
 		{
-			min_line=min((int)current->widget->layout_info.y, min_line);
-			max_line=max((int)current->widget->layout_info.y, max_line);
+			const int y = current->widget->layout_info.y;
+			if (min_line > y)
+			{
+				min_line = y;
+			}
+			if (max_line < y)
+			{
+				max_line = y;
+			}
 		}
 		current=current->next;
 	}

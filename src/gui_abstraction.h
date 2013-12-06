@@ -8,8 +8,10 @@ extern "C"
 
 #ifdef WIN32
 #include "windows.h"
-#endif
 #include "GL/GL.h"
+#else
+#include "GLES/gl.h"
+#endif
 #include "gui_mgr.h"
 
 

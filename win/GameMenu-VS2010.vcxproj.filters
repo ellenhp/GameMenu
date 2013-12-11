@@ -26,6 +26,9 @@
     <ClInclude Include="..\src\gui_input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\gui_label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\gui_button.c">
@@ -38,6 +41,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gui_input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gui_label.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

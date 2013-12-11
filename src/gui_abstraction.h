@@ -30,6 +30,8 @@ void GameMenu_draw();
 widget_bounding_box_t GameMenu_get_bb(widget_t* widget);
 void GameMenu_draw_text(char* text, int active, coord_t coord);
 void GameMenu_draw_image(GLuint binding, rect_t image_rect, rect_t screen_rect);
+void GameMenu_draw_image_full(GLuint binding, rect_t screen_rect);
+
 coord_t get_absolute(coord_t coord, int asc, int desc);
 
 int GameMenu_get_window_height();

@@ -30,7 +30,8 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 		{
 			widget_bounding_box_t bb=GameMenu_get_bb(current->widget);
 			if (x>bb.x && x<bb.x+bb.width &&
-				y>bb.y && y<bb.y+bb.height)
+				y>bb.y && y<bb.y+bb.height &&
+				current->widget->type!=LABEL)
 			{
 				active_item=current;
 				break;
@@ -85,9 +86,6 @@ void gui_draw()
 	{
 		switch (current->widget->type)
 		{
-		case BUTTON:
-			sprintf(text, "%s", current->widget->text);
-			break;
 		case SLIDER:
 			if (active_item==current)
 			{
@@ -97,6 +95,9 @@ void gui_draw()
 			{
 				sprintf(text, "%s", current->widget->text);
 			}
+			break;
+		default:
+			sprintf(text, "%s", current->widget->text);
 			break;
 		}
 		GameMenu_draw_text(text, active_item==current, current->widget->layout_info);
@@ -119,7 +120,7 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 	widget_list_item_t* current=top;
 
 	int last_line=INT_MIN;
-	int next_line;
+	int next_line=0;
 
 	if (current)
 	{
@@ -147,10 +148,6 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 	else
 	{
 		//the list is empty
-		if (!coord)
-		{
-			next_line=0;
-		}
 		top=current=(widget_list_item_t*)malloc(sizeof(widget_list_item_t));
 		current->prev=0;
 		current->next=0;
@@ -166,6 +163,10 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 		widget->layout_info.y_coord_type=LINE_COORD;
 		widget->layout_info.y_just=CENTER_JUST;
 	}
+	else
+	{
+		widget->layout_info=*coord;
+	}
 
 	if (!active_item && SDL_NumJoysticks()>0)
 	{
@@ -176,6 +177,7 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 void gui_process_input(input_t input)
 {
 	widget_bounding_box_t bb={0, 0, 0, 0};
+	widget_list_item_t* new_active_item=active_item;
 	switch (input)
 	{
 	case NONE_INPUT:
@@ -190,19 +192,33 @@ void gui_process_input(input_t input)
 		//directional input
 		if (active_item==NULL)
 		{
-			active_item=top;
+			new_active_item=top;
+			while (new_active_item && new_active_item->widget->type==LABEL)
+			{
+				new_active_item=new_active_item->next;
+			}
+			active_item=new_active_item;
 			return;
 		}
 		//another switch. I don't think it's possible to combine them without duplicating the active_item==NULL check
 		switch (input)
 		{
 		case UP_INPUT:
-			if (active_item->prev)
-				active_item=active_item->prev;
+			do
+			{
+				new_active_item=new_active_item->prev;
+			} while  (new_active_item && new_active_item->widget->type==LABEL);
+			if (new_active_item)
+				active_item=new_active_item;
 			break;
 		case DOWN_INPUT:
-			if (active_item->next)
-				active_item=active_item->next;
+			do
+			{
+				new_active_item=new_active_item->next;
+			} while (new_active_item && new_active_item->widget->type==LABEL);
+			if (new_active_item)
+				active_item=new_active_item;
+			return;
 			break;
 		case RIGHT_INPUT:
 			if (active_item->widget->type==SLIDER && active_item->widget->callback1)

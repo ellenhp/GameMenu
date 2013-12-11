@@ -30,7 +30,8 @@ typedef void (*widget_click_callback_t)(int button, int mouse_x, int mouse_y, wi
 typedef enum widget_type_t
 {
 	BUTTON,
-	SLIDER
+	SLIDER,
+	LABEL
 } widget_type_t;
 
 /* Lists all available ways to define a widget's position

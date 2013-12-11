@@ -83,12 +83,14 @@
     <ClInclude Include="..\src\gui_abstraction.h" />
     <ClInclude Include="..\src\gui_button.h" />
     <ClInclude Include="..\src\gui_input.h" />
+    <ClInclude Include="..\src\gui_label.h" />
     <ClInclude Include="..\src\gui_mgr.h" />
     <ClInclude Include="..\src\gui_slider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\gui_button.c" />
     <ClCompile Include="..\src\gui_input.c" />
+    <ClCompile Include="..\src\gui_label.c" />
     <ClCompile Include="..\src\gui_mgr.c" />
     <ClCompile Include="..\src\gui_slider.c" />
   </ItemGroup>

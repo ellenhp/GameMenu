@@ -89,10 +89,17 @@ void gui_draw()
 			sprintf(text, "%s", current->widget->text);
 			break;
 		case SLIDER:
-			sprintf(text, "%s", current->widget->text);
+			if (active_item==current)
+			{
+				sprintf(text, "< %s >", current->widget->text);
+			}
+			else
+			{
+				sprintf(text, "%s", current->widget->text);
+			}
 			break;
 		}
-		GameMenu_draw_text(current->widget->text, active_item==current, current->widget->layout_info);
+		GameMenu_draw_text(text, active_item==current, current->widget->layout_info);
 		
 		current=current->next;
 	}
@@ -260,6 +267,7 @@ void slider_set_value(widget_t* slider, int value)
 	char* next_delimiter=slider->data2;
 	char* substring_end=0;
 	int substring_length=0;
+	char* format;
 
 	char tmp[100];
 
@@ -300,13 +308,13 @@ void slider_set_value(widget_t* slider, int value)
 		memcpy(tmp, next_delimiter, substring_length);
 		tmp[substring_length]=0; //null terminate the string
 
-		sprintf(slider->text, "< %s%s >", slider->data1, tmp);
+		sprintf(slider->text, "%s%s", slider->data1, tmp);
 	}
 	else
 	{
 		slider->text=(char*)malloc(strlen(slider->data1)+10);
 
-		sprintf(slider->text, "< %s%d >", slider->data1, slider->option);
+		sprintf(slider->text, "%s%d", slider->data1, slider->option);
 	}
 }
 

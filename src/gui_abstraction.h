@@ -28,7 +28,7 @@ void GameMenu_init();
 void GameMenu_draw();
 
 widget_bounding_box_t GameMenu_get_bb(widget_t* widget);
-void GameMenu_draw_text(char* text, int active, coord_t coord, char* requested_font_binding);
+void GameMenu_draw_text(const char* text, int active, coord_t coord, char* requested_font_binding);
 void GameMenu_draw_image(GLuint binding, rect_t image_rect, rect_t screen_rect);
 void GameMenu_draw_image_full(GLuint binding, rect_t screen_rect);
 

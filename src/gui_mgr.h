@@ -78,6 +78,7 @@ typedef struct widget_t
 	char* text;
 	char* data1;
 	char* data2;
+	char* font_binding;
 	int option;
 	int total_options;
 	int shortcut_key;

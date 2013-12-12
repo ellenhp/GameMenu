@@ -10,6 +10,7 @@ widget_t* create_label(char* text)
 	label->callback1=label->callback2=0;
 	label->data1=0;
 	label->data2=0;
+	label->font_binding=0;
 	label->type=LABEL;
 	return label;
 }

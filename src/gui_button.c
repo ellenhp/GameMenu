@@ -10,6 +10,7 @@ widget_t* create_button(char* text, widget_click_callback_t click_cb)
 	btn->callback1=click_cb;
 	btn->data1=0;
 	btn->data2=0;
+	btn->font_binding=0;
 	btn->type=BUTTON;
 	return btn;
 }

@@ -100,7 +100,7 @@ void gui_draw()
 			sprintf(text, "%s", current->widget->text);
 			break;
 		}
-		GameMenu_draw_text(text, active_item==current, current->widget->layout_info);
+		GameMenu_draw_text(text, active_item==current, current->widget->layout_info, current->widget->font_binding);
 		
 		current=current->next;
 	}
@@ -258,7 +258,10 @@ void gui_balance_lines(int manual_offset)
 	current=top;
 	while (current)
 	{
-		current->widget->layout_info.y+=offset;
+		if (current->widget->layout_info.y_coord_type==LINE_COORD)
+		{
+			current->widget->layout_info.y+=offset;
+		}
 		current=current->next;
 	}
 

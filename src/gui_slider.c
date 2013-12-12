@@ -63,6 +63,8 @@ widget_t* create_slider(char* text, int num_options, char* options, widget_click
 	{
 		slider->data2=0;
 	}
+
+	slider->font_binding=0;
 	
 	return slider;
 }

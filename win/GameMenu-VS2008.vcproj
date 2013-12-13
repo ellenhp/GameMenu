@@ -157,6 +157,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\gui_label.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\gui_mgr.c"
 				>
 			</File>
@@ -180,6 +184,10 @@
 			</File>
 			<File
 				RelativePath="..\src\gui_input.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\gui_label.h"
 				>
 			</File>
 			<File

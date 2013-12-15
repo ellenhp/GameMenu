@@ -78,6 +78,9 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 	}
 }
 
+#define LEFT_ARROW	"\x05"
+#define RIGHT_ARROW	"\x06"
+
 void gui_draw()
 {
 	widget_list_item_t* current=top;
@@ -89,7 +92,7 @@ void gui_draw()
 		case SLIDER:
 			if (active_item==current)
 			{
-				sprintf(text, "< %s >", current->widget->text);
+				sprintf(text, LEFT_ARROW " %s " RIGHT_ARROW, current->widget->text);
 			}
 			else
 			{

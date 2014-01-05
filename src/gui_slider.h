@@ -1,5 +1,5 @@
-#ifndef GUI_BUTTON_H
-#define GUI_BUTTON_H
+#ifndef GUI_SLIDER_H
+#define GUI_SLIDER_H
 
 #ifdef __cplusplus
 extern "C"

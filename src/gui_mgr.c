@@ -116,11 +116,25 @@ void gui_update()
 	gui_input_update();
 }
 
+int gui_should_autoselect()
+{
+    int i;
+    for (i=0; i<SDL_NumJoysticks(); i++)
+    {
+        if (SDL_IsGameController(i))
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void gui_add_widget(widget_t* widget, coord_t* coord)
 {
 	//current functionality appends item to the end of the linked list
 	widget_list_item_t* item;
 	widget_list_item_t* current=top;
+    widget_list_item_t* new_active_item;
 
 	int last_line=INT_MIN;
 	int next_line=0;
@@ -171,9 +185,18 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 		widget->layout_info=*coord;
 	}
 
-	if (!active_item && SDL_NumJoysticks()>0)
+	if (!active_item && gui_should_autoselect())
 	{
-		active_item=top;
+		new_active_item=top;
+        while (new_active_item->widget->type==LABEL)
+        {
+            new_active_item=new_active_item->next;
+            if (new_active_item==NULL)
+            {
+                return;
+            }
+        }
+        active_item=new_active_item;
 	}
 }
 

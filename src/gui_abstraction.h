@@ -23,6 +23,8 @@ void GameMenu_joystick_button_func( int button );
 void GameMenu_keypress( int key );
 
 void GameMenu_simulate_click(widget_t* widget);
+    
+void GameMenu_set_y_offset(double offset);
 
 void GameMenu_init();
 void GameMenu_draw();

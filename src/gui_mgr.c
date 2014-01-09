@@ -23,28 +23,52 @@ void gui_mouse_motion_event(int x, int y)
 void gui_mouse_button_event(int button, int down, int x, int y)
 {
 	widget_click_callback_t cb=0;
-	if (down)
+    if (down)
 	{
 		widget_list_item_t* current=top;
 		while (current)
 		{
-			widget_bounding_box_t bb=GameMenu_get_bb(current->widget);
+			widget_bounding_box_t bb;
+            if (current==active_item)
+            {
+                current->widget->active=1;
+                bb=GameMenu_get_bb(current->widget);
+                current->widget->active=0;
+            }
+            else
+            {
+                bb=GameMenu_get_bb(current->widget);
+            }
 			if (x>bb.x && x<bb.x+bb.width &&
 				y>bb.y && y<bb.y+bb.height &&
 				current->widget->type!=LABEL)
 			{
-				active_item=current;
-				break;
+				if (active_item==current)
+                {
+                    if (button==SDL_BUTTON_LEFT) //left mouse button
+                    {
+                        cb=active_item->widget->callback1; //up callback
+                    }
+                    if (cb)
+                    {
+                        cb(button, x, y, bb, CLICK_INPUT, active_item->widget);
+                    }
+                }
+                else
+                {
+                    active_item=current;
+                }
+                return;
 			}
 			current=current->next;
 		}
 		if (!current) //end of the loop was reached
 		{
 			active_item=NULL;
+            return;
 		}
-
 	}
-	else if (active_item)
+	if (active_item)
 	{
 		widget_bounding_box_t bb=GameMenu_get_bb(active_item->widget);
 		if (x>bb.x && x<bb.x+bb.width &&
@@ -52,29 +76,15 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 		{
 			switch (active_item->widget->type)
 			{
-			case BUTTON:
-				if (active_item->widget->callback1)
-				{
-					active_item->widget->callback1(button, x, y, bb, CLICK_INPUT, active_item->widget);
-				}
-				break;
-			case SLIDER:
-				if (button==SDL_BUTTON_LEFT) //left mouse button
-				{
-					cb=active_item->widget->callback1; //up callback
-				}
-				else if (button==SDL_BUTTON_RIGHT) //right mouse button
-				{
-					cb=active_item->widget->callback2; //down callback
-				}
-				if (cb)
-				{
-					cb(button, x, y, bb, CLICK_INPUT, active_item->widget);
-				}
-				break;
+                case BUTTON:
+                    if (active_item->widget->callback1)
+                    {
+                        active_item->widget->callback1(button, x, y, bb, CLICK_INPUT, active_item->widget);
+                    }
+                    active_item=NULL;
+                    break;
 			}
 		}
-		active_item=NULL;
 	}
 }
 

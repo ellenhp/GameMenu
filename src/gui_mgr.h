@@ -82,6 +82,7 @@ typedef struct widget_t
 	int option;
 	int total_options;
 	int shortcut_key;
+    int active;
 	widget_click_callback_t callback1, callback2;
 	coord_t layout_info;
 } widget_t;

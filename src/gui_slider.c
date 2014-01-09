@@ -48,6 +48,7 @@ widget_t* create_slider(char* text, int num_options, char* options, widget_click
 	slider->callback1=slider_value_changed;
 	slider->callback2=changed;
 	slider->option=0;
+    slider->active=0;
 	slider->total_options=num_options;
 	slider->type=SLIDER;
 

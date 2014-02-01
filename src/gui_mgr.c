@@ -128,15 +128,7 @@ void gui_update()
 
 int gui_should_autoselect()
 {
-    int i;
-    for (i=0; i<SDL_NumJoysticks(); i++)
-    {
-        if (SDL_IsGameController(i))
-        {
-            return 1;
-        }
-    }
-    return 0;
+    return 1;
 }
 
 void gui_add_widget(widget_t* widget, coord_t* coord)

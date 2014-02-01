@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <SDL.h>
 
-widget_list_item_t* top;
+widget_list_item_t* menu_top;
 
 widget_list_item_t* active_item;
 
@@ -25,7 +25,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 	widget_click_callback_t cb=0;
     if (down)
 	{
-		widget_list_item_t* current=top;
+		widget_list_item_t* current=menu_top;
 		while (current)
 		{
 			widget_bounding_box_t bb;
@@ -93,7 +93,7 @@ void gui_mouse_button_event(int button, int down, int x, int y)
 
 void gui_draw()
 {
-	widget_list_item_t* current=top;
+	widget_list_item_t* current=menu_top;
 	char text[100];
 	while (current)
 	{
@@ -126,24 +126,11 @@ void gui_update()
 	gui_input_update();
 }
 
-int gui_should_autoselect()
-{
-    int i;
-    for (i=0; i<SDL_NumJoysticks(); i++)
-    {
-        if (SDL_IsGameController(i))
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
 void gui_add_widget(widget_t* widget, coord_t* coord)
 {
 	//current functionality appends item to the end of the linked list
 	widget_list_item_t* item;
-	widget_list_item_t* current=top;
+	widget_list_item_t* current=menu_top;
     widget_list_item_t* new_active_item;
 
 	int last_line=INT_MIN;
@@ -175,7 +162,7 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 	else
 	{
 		//the list is empty
-		top=current=(widget_list_item_t*)malloc(sizeof(widget_list_item_t));
+		menu_top=current=(widget_list_item_t*)malloc(sizeof(widget_list_item_t));
 		current->prev=0;
 		current->next=0;
 		current->widget=widget;
@@ -195,9 +182,9 @@ void gui_add_widget(widget_t* widget, coord_t* coord)
 		widget->layout_info=*coord;
 	}
 
-	if (!active_item && gui_should_autoselect())
+	if (active_item == NULL)
 	{
-		new_active_item=top;
+		new_active_item=menu_top;
         while (new_active_item->widget->type==LABEL)
         {
             new_active_item=new_active_item->next;
@@ -228,7 +215,7 @@ void gui_process_input(input_t input)
 		//directional input
 		if (active_item==NULL)
 		{
-			new_active_item=top;
+			new_active_item=menu_top;
 			while (new_active_item && new_active_item->widget->type==LABEL)
 			{
 				new_active_item=new_active_item->next;
@@ -270,7 +257,7 @@ void gui_process_input(input_t input)
 
 void gui_balance_lines(int manual_offset)
 {
-	widget_list_item_t* current=top;
+	widget_list_item_t* current=menu_top;
 	int min_line=INT_MAX, max_line=INT_MIN;
 	int offset;
 	while (current)
@@ -291,7 +278,7 @@ void gui_balance_lines(int manual_offset)
 	}
 	offset=min_line-(max_line-min_line)/2 + manual_offset;
 
-	current=top;
+	current=menu_top;
 	while (current)
 	{
 		if (current->widget->layout_info.y_coord_type==LINE_COORD)
@@ -396,7 +383,7 @@ void destroy_widget(widget_t* widget)
 
 void reset_gui()
 {
-	widget_list_item_t* current=top;
+	widget_list_item_t* current=menu_top;
 	widget_list_item_t* tmp;
 	while (current)
 	{
@@ -407,7 +394,7 @@ void reset_gui()
 		free(tmp);
 	}
 	active_item=NULL;
-	top=0;
+	menu_top=NULL;
 }
 
 void setup_gui()
